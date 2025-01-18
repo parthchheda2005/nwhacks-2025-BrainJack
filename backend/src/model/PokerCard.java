@@ -21,7 +21,7 @@ public class PokerCard {
         // Set the value of the card
         switch (number) {
             case "A":
-                this.value = 1;
+                this.value = 11;
                 break;
             case "J":
             case "Q":
@@ -34,11 +34,11 @@ public class PokerCard {
         }
     }
 
-    // Changes the value of A from: true: 1 -> 11, false: 11 -> 1 only if the card is an A
+    // Changes the value of A from: true: 11 -> 1, false: 1 -> 11 only if the card is an A
     // Otherwise, do nothing.
     public void changeValueOfA(boolean flag) {
         if (number.equals("A")) {
-            value = flag ? 11 : 1;
+            value = flag ? 1 : 11;
         }
     }
 
