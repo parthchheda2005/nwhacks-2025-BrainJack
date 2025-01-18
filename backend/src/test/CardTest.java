@@ -25,13 +25,14 @@ public class CardTest {
         cardQ = new PokerCard("Clover", "Q");
         cardK = new PokerCard("Diamonds", "K");
     }
+
     
     // Tests the constructor
     @Test
     public void constructorTest() {
         assertEquals("Diamonds", cardA.getSuite());
         assertEquals("A", cardA.getNumber());
-        assertEquals(1, cardA.getValue());
+        assertEquals(11, cardA.getValue());
 
         assertEquals(2, card2.getValue());
         assertEquals(10, cardJ.getValue());
@@ -49,11 +50,11 @@ public class CardTest {
 
         // Change value of A from 1 -> 11
         cardA.changeValueOfA(true);
-        assertEquals(11, cardA.getValue());
+        assertEquals(1, cardA.getValue());
 
         // Change value of A from 11 -> 11
         cardA.changeValueOfA(false);
-        assertEquals(1, cardA.getValue());
+        assertEquals(11, cardA.getValue());
     }
 
 }
