@@ -1,16 +1,15 @@
-import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import HomePage from "../components/HomePage";
+import HomePage from "./components/HomePage";
+import Loading from "./components/Loading";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/loading" element={<Loading />} />
         </Routes>
       </BrowserRouter>
     </div>
