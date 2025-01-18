@@ -1,7 +1,7 @@
 package model;
 
 // Represents the card class for a deck of cards
-public class Card {
+public class PokerCard {
 
     // Stores the value of the card in blackjack
     private int value;
@@ -13,7 +13,7 @@ public class Card {
     // Constructs a new card
     // REQUIRES: Suites must be one of: "Hearts", "Spaces", "Clover", "Diamonds"
     //           Number must be one of: "2" to "10", "J", "Q", "K"
-    public Card(String suite, String number) {
+    public PokerCard(String suite, String number) {
         // Set the suite and number 
         this.suite = suite;
         this.number = number;
@@ -34,10 +34,12 @@ public class Card {
         }
     }
 
-    // Changes the value of A from: true: 1 -> 11, false: 11 -> 1
-    // REQUIRES: the card must be an A
+    // Changes the value of A from: true: 1 -> 11, false: 11 -> 1 only if the card is an A
+    // Otherwise, do nothing.
     public void changeValueOfA(boolean flag) {
-        value = flag ? 11 : 1;
+        if (number.equals("A")) {
+            value = flag ? 11 : 1;
+        }
     }
 
     ///// GETTER METHODS /////
