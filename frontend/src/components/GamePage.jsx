@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import deck from "./deck";
 import { useNavigate } from "react-router-dom";
 
-const GamePage = ({ loser, setLoser }) => {
+const GamePage = ({ loser, setLoser, balance, setBalance, bettingAmount }) => {
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
   const [playerHand, setPlayerHand] = useState([]);
@@ -47,6 +47,8 @@ const GamePage = ({ loser, setLoser }) => {
   }, [playerHand]);
 
   const showGameOver = () => {
+    if (loser === "dealer") setBalance((curr) => curr + bettingAmount);
+    if (loser === "player") setBalance((curr) => curr - bettingAmount);
     setIsGameOver(true);
   };
 
@@ -164,6 +166,7 @@ const GamePage = ({ loser, setLoser }) => {
           <div className="text-2xl mb-8">
             <p>Your Score: {playerScore}</p>
             <p>Dealer Score: {dealerScore}</p>
+            <p>Balance: {balance}</p>
           </div>
           <button
             onClick={playAgain}
