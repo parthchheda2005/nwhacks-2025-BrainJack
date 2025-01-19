@@ -5,6 +5,8 @@ import HomePage from "./components/HomePage";
 import Loading from "./components/Loading";
 import PlaceBets from "./components/PlaceBets";
 import GamePage from "./components/GamePage";
+import QuestionAnswer from "./components/QuestionAnswer";
+import WinningsMultiplier from "./components/WinningsMultiplier";
 
 function App() {
   const [loser, setLoser] = useState("");
@@ -40,6 +42,28 @@ function App() {
                 balance={balance}
                 setBalance={setBalance}
                 setBettingAmount={setBettingAmount}
+              />
+            }
+          />
+          <Route
+            path="/get-your-money-back"
+            element={
+              <QuestionAnswer
+                bettingAmount={bettingAmount}
+                balance={balance}
+                setBettingAmount={setBettingAmount}
+                setBalance={setBalance}
+              />
+            }
+          />
+          <Route
+            path="/multiply-your-winnings"
+            element={
+              <WinningsMultiplier
+                bettingAmount={bettingAmount}
+                balance={balance}
+                setBettingAmount={setBettingAmount}
+                setBalance={setBalance}
               />
             }
           />

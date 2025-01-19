@@ -5,9 +5,10 @@ function HomePage() {
 
   return (
     <div className="flex justify-center items-center h-screen flex-col">
-      <h1 className="font-bold text-6xl">Blackjack!</h1>
+      <h1 className="font-bold text-6xl">BrainJack!</h1>
+      <p className="font-bold text-lg my-3">Blackjack but with Trivia!</p>
       <button
-        className="bg-[#a2b288] px-2 py-3 rounded-lg m-8 w-80 text-xl"
+        className="bg-[#a2b288] px-2 py-3 rounded-lg m-5 w-80 text-xl"
         onClick={() => navigate("/place-bets")}
       >
         Play Game!

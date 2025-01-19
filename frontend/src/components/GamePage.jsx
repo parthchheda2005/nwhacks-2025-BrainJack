@@ -15,7 +15,6 @@ const GamePage = ({
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerHand, setDealerHand] = useState([]);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
 
   let currDeck = [...deck];
@@ -27,7 +26,7 @@ const GamePage = ({
           "http://127.0.0.1:8000/questions/v1/getAllQuestions"
         );
         const data = await res.json();
-        console.log(data.data);
+        setQuestions(data.data);
       } catch (e) {
         console.error(e);
       }
@@ -89,7 +88,7 @@ const GamePage = ({
   const hit = (e) => {
     if (e) e.preventDefault();
     let drawnCard = drawCards(currDeck, 1);
-    if (playerScore < 21 && drawnCard[0].value === 11)
+    if (playerScore + drawnCard.value > 21 && drawnCard[0].value === 11)
       drawnCard[0] = { ...drawnCard[0], value: 1 };
     setPlayerHand((curr) => [...curr, drawnCard[0]]);
     if (playerScore + drawnCard[0].value > 21) {
@@ -188,8 +187,14 @@ const GamePage = ({
   };
 
   const playAgain = () => {
-    setBettingAmount(0);
-    navigate("/place-bets");
+    if (loser === "tie") {
+      setBettingAmount(0);
+      navigate("/place-bets");
+    } else if (loser === "dealer") {
+      navigate("/multiply-your-winnings");
+    } else {
+      navigate("/get-your-money-back");
+    }
   };
 
   return (
@@ -215,7 +220,11 @@ const GamePage = ({
             onClick={playAgain}
             className="bg-white text-black px-8 py-4 rounded-lg text-xl font-semibold hover:bg-gray-200 transition-colors"
           >
-            Play Again
+            {loser === "player"
+              ? "Get your money back!"
+              : loser === "dealer"
+              ? "Multiply your winnings!"
+              : "Play again"}
           </button>
         </div>
       </div>
