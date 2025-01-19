@@ -10,6 +10,7 @@ public class Dealer extends Player {
     }
 
     // Method for the dealer to play their turn
+    // REQUIRES: this method can only be run after the dealer already has 2 cards. 
     public void playTurn(Deck deck) {
         // Dealer must draw cards until their score is 17 or higher
         while (getScore() < 17) {
