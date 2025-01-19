@@ -39,6 +39,7 @@ function App() {
                 bettingAmount={bettingAmount}
                 balance={balance}
                 setBalance={setBalance}
+                setBettingAmount={setBettingAmount}
               />
             }
           />

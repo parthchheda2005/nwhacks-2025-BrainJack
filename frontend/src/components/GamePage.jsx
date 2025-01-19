@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import deck from "./deck";
 import { useNavigate } from "react-router-dom";
 
-const GamePage = ({ loser, setLoser, balance, setBalance, bettingAmount }) => {
+const GamePage = ({
+  loser,
+  setLoser,
+  balance,
+  setBalance,
+  bettingAmount,
+  setBettingAmount,
+}) => {
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
   const [playerHand, setPlayerHand] = useState([]);
@@ -46,9 +53,9 @@ const GamePage = ({ loser, setLoser, balance, setBalance, bettingAmount }) => {
     setPlayerScore(sum);
   }, [playerHand]);
 
-  const showGameOver = () => {
-    if (loser === "dealer") setBalance((curr) => curr + bettingAmount);
-    if (loser === "player") setBalance((curr) => curr - bettingAmount);
+  const showGameOver = (finalLoser) => {
+    if (finalLoser === "dealer") setBalance((curr) => curr + bettingAmount * 2);
+    if (finalLoser === "tie") setBalance((curr) => curr + bettingAmount);
     setIsGameOver(true);
   };
 
@@ -60,11 +67,11 @@ const GamePage = ({ loser, setLoser, balance, setBalance, bettingAmount }) => {
     setPlayerHand((curr) => [...curr, drawnCard[0]]);
     if (playerScore + drawnCard[0].value > 21) {
       setLoser("player");
-      showGameOver();
+      showGameOver("player");
     }
     if (playerScore + drawnCard[0].value === 21) {
       setLoser("dealer");
-      showGameOver();
+      showGameOver("dealer");
     }
   };
 
@@ -80,26 +87,29 @@ const GamePage = ({ loser, setLoser, balance, setBalance, bettingAmount }) => {
 
     if (newPlayerScore > 21) {
       setLoser("player");
-      showGameOver();
+      showGameOver("player");
       return;
     }
 
     const dealerTurn = (currentScore) => {
       if (currentScore > 21) {
         setLoser("dealer");
-        showGameOver();
+        showGameOver("dealer");
         return;
       }
 
       if (currentScore >= 17) {
         if (currentScore === newPlayerScore) {
           setLoser("tie");
+          showGameOver("tie");
         } else if (currentScore > newPlayerScore) {
           setLoser("player");
+          showGameOver("player");
         } else {
           setLoser("dealer");
+          showGameOver("dealer");
         }
-        showGameOver();
+
         return;
       }
 
@@ -124,14 +134,18 @@ const GamePage = ({ loser, setLoser, balance, setBalance, bettingAmount }) => {
       if (currentScore >= 17) {
         if (currentScore > 21) {
           setLoser("dealer"); // Dealer busts, player wins
+          showGameOver("dealer");
         } else if (currentScore === playerScore) {
           setLoser("tie"); // Equal scores
+          showGameOver("tie");
         } else if (currentScore > playerScore) {
           setLoser("player"); // Dealer has higher score, player loses
+          showGameOver("player");
         } else {
           setLoser("dealer"); // Player has higher score, dealer loses
+          showGameOver("dealer");
         }
-        showGameOver();
+
         return;
       }
 
@@ -146,6 +160,7 @@ const GamePage = ({ loser, setLoser, balance, setBalance, bettingAmount }) => {
   };
 
   const playAgain = () => {
+    setBettingAmount(0);
     navigate("/place-bets");
   };
 
