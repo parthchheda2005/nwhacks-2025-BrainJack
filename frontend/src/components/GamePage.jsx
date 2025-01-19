@@ -127,6 +127,7 @@ const GamePage = ({
 
     dealerTurn(dealerScore);
   };
+
   const stand = (e) => {
     if (e) e.preventDefault();
 
