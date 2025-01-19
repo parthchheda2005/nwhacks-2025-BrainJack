@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-
 public class Dealer extends Player {
     
     // Constructor to initialize the dealer (uses Player's constructor)

@@ -46,6 +46,13 @@ public class GameController {
         return players;
     }
 
+    // Get the current state of all players' hands
+    @GetMapping("/players")
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+
     // Get a player's hand by their ID
     @GetMapping("/player/{id}")
     public Player getPlayerHand(@PathVariable int id) {

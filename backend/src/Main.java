@@ -1,10 +1,9 @@
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"model", "test"})
 public class Main {
     public static void main(String[] args) {
-        // This will start the Spring Boot application
         SpringApplication.run(Main.class, args);
     }
 }
