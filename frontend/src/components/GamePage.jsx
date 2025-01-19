@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 
+const imgsStackTest = [
+  "https://github.com/hanhaechi/playing-cards/blob/master/clubs_10.png?raw=true",
+  "https://github.com/hanhaechi/playing-cards/blob/master/diamonds_2.png?raw=true",
+  "https://github.com/hanhaechi/playing-cards/blob/master/hearts_8.png?raw=true",
+];
+
 const BlackjackLayout = () => {
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
@@ -48,12 +54,24 @@ const BlackjackLayout = () => {
             </button>
           </div>
 
-          {/* Middle side */}
-          <img
-            src="https://github.com/hanhaechi/playing-cards/blob/master/clubs_10.png?raw=true"
-            alt="10 club"
-            className="ml-20"
-          />
+          {/* Middle section with stacked cards */}
+          <div className="relative flex justify-center items-center min-w-[300px] min-h-[200px] mt-20">
+            {imgsStackTest.map((curr, index) => (
+              <div
+                key={index}
+                className="absolute"
+                style={{
+                  left: `${index * 30}px`,
+                }}
+              >
+                <img
+                  src={curr}
+                  alt={`Card ${index + 1}`}
+                  className="w-auto h-auto"
+                />
+              </div>
+            ))}
+          </div>
 
           {/* Right side */}
           <div className="flex flex-col items-center justify-center mr-12 gap-3">
