@@ -133,8 +133,8 @@ public class DeckTest {
     // Tests drawing random card from deck
     @Test 
     public void drawRandomCardTest() {
-        instance1.resetInstance();
-        instance1.getInstance();
+        Deck.resetInstance();
+        Deck.getInstance();
         instance1.drawCard();
         instance1.drawCard();
         assertEquals(50, instance1.getDeckOfCards().size());
