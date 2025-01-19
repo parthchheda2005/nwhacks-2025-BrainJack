@@ -15,11 +15,8 @@ public class Deck {
     // Also, it has a faster runtime for lookup and retrieval
     private List<PokerCard> deckOfCards;
 
-    // Stores the instance of the Deck class
-    private static Deck instance;
-
     // Private constructor constructs a new deck of 52 poker cards. 
-    private Deck() {
+    public Deck() {
         this.randomGenerator = new Random();
         this.deckOfCards = new ArrayList<>();
 
@@ -32,20 +29,6 @@ public class Deck {
                 deckOfCards.add(new PokerCard(suite, number));
             } 
         }
-    }
-
-    // Gets the instance of the Deck
-    public static Deck getInstance() {
-        if (instance == null) {
-            instance = new Deck();
-        }
-        return instance;
-    }
-
-    // Resets the instance of the class (only used for testing purposes)
-    public static void resetInstance() {
-        instance = null;
-
     }
 
     // Draws a random card

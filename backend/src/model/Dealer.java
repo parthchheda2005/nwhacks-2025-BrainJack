@@ -6,7 +6,7 @@ public class Dealer extends Player {
     
     // Constructor to initialize the dealer (uses Player's constructor)
     public Dealer() {
-        super();
+        super(0);
     }
 
     // Method for the dealer to play their turn

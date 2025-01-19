@@ -11,21 +11,11 @@ import model.PokerCard;
 public class DeckTest {
     
     public Deck instance1;
-    public Deck instance2;
-    public Deck instance3;
 
     // Gets the instance of the Deck class, or creates a new one if it hasn't been initialized yet. 
     @Before
     public void initialize() {
-        instance1 = Deck.getInstance();
-        instance2 = Deck.getInstance();
-    }
-
-    // Check to make sure the singleton is working 
-    @Test
-    public void singletonTest() {
-        assertEquals(instance1, instance2);
-        assertEquals(52, instance1.getDeckOfCards().size());
+        instance1 = new Deck();
     }
 
     // Test to see whether or not card deck was constructed properly
@@ -128,13 +118,12 @@ public class DeckTest {
         assertEquals(13, heartsCount);
         assertEquals(13, spadesCount);
         assertEquals(13, cloverCount);
+        assertEquals(52, instance1.getDeckOfCards().size());
     }
 
     // Tests drawing random card from deck
     @Test 
     public void drawRandomCardTest() {
-        Deck.resetInstance();
-        Deck.getInstance();
         instance1.drawCard();
         instance1.drawCard();
         assertEquals(50, instance1.getDeckOfCards().size());

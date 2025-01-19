@@ -17,13 +17,15 @@ public class PlayerTest {
 
     @Before
     public void setUp() {
-        player = new Player();
+        player = new Player(1);
     }
 
     @Test
     public void testConstructorInitializesEmptyHandAndZeroScore() {
         assertTrue(player.getHand().isEmpty());
         assertEquals(0, player.getScore(), "Score should be 0 upon initialization");
+        assertEquals(1, player.getId());
+        assertEquals(0, player.getBalance());
     }
 
     @Test
@@ -81,5 +83,11 @@ public class PlayerTest {
         List<PokerCard> hand = player.getHand();
         assertEquals(2, hand.size(), "Hand should contain two cards");
         assertTrue(hand.contains(card1) && hand.contains(card2), "Hand should contain the added cards");
+    }
+
+    @Test
+    public void testChangeBalance() {
+        player.changeBalance(100);
+        assertEquals(100, player.getBalance());
     }
 }

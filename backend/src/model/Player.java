@@ -7,11 +7,16 @@ import java.util.List;
 public class Player {
     private List<PokerCard> hand;  // List to store player's hand (cards)
     private int score;        // The score of the player's hand
+    private int id;
+    private int balance;
 
     // Constructor to initialize the player's hand and score
-    public Player() {
-        hand = new ArrayList<>();
-        score = 0;
+    public Player(int id) {
+        this.id = id;
+        this.hand = new ArrayList<>();
+        this.score = 0;
+        this.balance = 0;
+        
     }
 
     // Method to add a card to the player's hand
@@ -48,6 +53,11 @@ public class Player {
         return score > 21;
     }
 
+    // Changes the balance
+    public void changeBalance(int change) {
+        balance += change;
+    }
+
     // Method to get a string representation of the player's hand
     // @Override
     // public String toString() {
@@ -58,13 +68,10 @@ public class Player {
     //     return handString.toString() + "Score: " + score;
     // }
 
-    // Getter for the player's score
-    public int getScore() {
-        return score;
-    }
-
-    // Getter for the player's hand
-    public List<PokerCard> getHand() {
-        return hand;
-    }
+    ///// GETTER METHODS /////
+    
+    public int getScore() { return score; }
+    public List<PokerCard> getHand() { return hand; }
+    public int getId() { return id; }
+    public int getBalance() { return balance; }
 }

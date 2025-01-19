@@ -2,7 +2,17 @@
     "java.project.sourcePaths": ["backend/src"],
     "java.project.outputPath": "backend/bin",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "lib/**/*.jar",
+        "backend/lib/jackson-annotations-2.18.2.jar",
+        "backend/lib/jackson-core-2.18.2.jar",
+        "backend/lib/jackson-databind-2.18.2.jar",
+        "backend/lib/javax.servlet-api-4.0.1.jar",
+        "backend/lib/spring-boot-2.7.18.jar",
+        "backend/lib/spring-boot-autoconfigure-2.7.18.jar",
+        "backend/lib/spring-boot-starter-test-2.7.18.jar",
+        "backend/lib/spring-context-6.2.2.jar",
+        "backend/lib/spring-core-6.2.2.jar",
+        "backend/lib/spring-web-6.2.2.jar"
     ],
     "java.project.testSourcePaths": ["backend/src/test"], 
 }
