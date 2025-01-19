@@ -14,6 +14,8 @@ function WinningsMultiplier({
   const [timer, setTimer] = useState(10);
   const [isTimeUp, setIsTimeUp] = useState(false);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
+  const [currentWinnings, setCurrentWinnings] = useState(bettingAmount);
+  const [initialBet] = useState(bettingAmount); // Store the initial bet amount
 
   const navigate = useNavigate();
 
@@ -28,6 +30,7 @@ function WinningsMultiplier({
     } else if (timer === 0 && !selectedAnswer) {
       setIsTimeUp(true);
       setIsTimerRunning(false);
+      handleLoss();
     }
     return () => clearTimeout(countdown);
   }, [timer, selectedAnswer, isTimerRunning]);
@@ -67,6 +70,20 @@ function WinningsMultiplier({
     setIsTimerRunning(true);
   };
 
+  const handleLoss = () => {
+    // On loss, we only need to subtract the initial bet since it's already in the balance
+    setBalance((prev) => prev - initialBet);
+    setBettingAmount(0);
+  };
+
+  const handleCashOut = () => {
+    // Add only the additional winnings (currentWinnings - initialBet)
+    // since the initial bet is already in the balance
+    setBalance((prev) => prev + (currentWinnings - initialBet));
+    setBettingAmount(0);
+    navigate("/place-bets");
+  };
+
   const handleAnswerSelect = (answer) => {
     setSelectedAnswer(answer);
     setIsTimerRunning(false);
@@ -74,10 +91,10 @@ function WinningsMultiplier({
     setIsAnswerCorrect(correct);
 
     if (correct) {
-      // Triple the betting amount and update balance
-      const newBettingAmount = bettingAmount * 3;
-      setBettingAmount(newBettingAmount);
-      setBalance((curr) => curr + newBettingAmount);
+      // Double the current winnings
+      setCurrentWinnings((prev) => prev * 2);
+    } else {
+      handleLoss();
     }
   };
 
@@ -85,16 +102,14 @@ function WinningsMultiplier({
     fetchNewQuestion();
   };
 
-  const handleEndGame = () => {
-    setBettingAmount(0);
-    navigate("/place-bets");
-  };
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4">
       <h1 className="text-4xl font-bold mb-7">
-        🎲💰💸 GET YOUR MONEY BACK FROM THE HOUSE 🎲💰💸
+        🤑🤑🤑 STEAL MONEY FROM THE HOUSE 🤑🤑🤑
       </h1>
+      <div className="text-xl font-bold mb-4">
+        Current Potential Winnings: ${currentWinnings}
+      </div>
       {randomQuestion ? (
         <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-2xl">
           <h1 className="text-2xl font-bold text-center mb-4">Quiz Game</h1>
@@ -134,25 +149,31 @@ function WinningsMultiplier({
                 }`}
               >
                 {isAnswerCorrect
-                  ? "Correct! 🎉 Your betting amount has been tripled!"
-                  : `Incorrect! The correct answer was "${randomQuestion.correct_answer}".`}
-              </p>
-              <p className="text-lg font-semibold text-gray-800">
-                Current Betting Amount: ${bettingAmount}
+                  ? "Correct! 🎉 Your potential winnings have been doubled!"
+                  : `Game Over! You lost $${initialBet}. The correct answer was "${randomQuestion.correct_answer}".`}
               </p>
               <p className="text-lg font-semibold text-gray-800">
                 Balance: ${balance}
               </p>
-              {isAnswerCorrect ? (
+              {isAnswerCorrect && (
+                <div className="flex justify-center gap-4 mt-4">
+                  <button
+                    onClick={handleNextQuestion}
+                    className="px-6 py-2 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition duration-200"
+                  >
+                    Continue Playing
+                  </button>
+                  <button
+                    onClick={handleCashOut}
+                    className="px-6 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition duration-200"
+                  >
+                    Cash Out (${currentWinnings})
+                  </button>
+                </div>
+              )}
+              {!isAnswerCorrect && (
                 <button
-                  onClick={handleNextQuestion}
-                  className="mt-4 px-6 py-2 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition duration-200"
-                >
-                  Next Question
-                </button>
-              ) : (
-                <button
-                  onClick={handleEndGame}
+                  onClick={() => navigate("/place-bets")}
                   className="mt-4 px-6 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition duration-200"
                 >
                   Place New Bet
@@ -163,11 +184,11 @@ function WinningsMultiplier({
           {isTimeUp && !selectedAnswer && (
             <div className="mt-6 text-center">
               <p className="text-lg font-semibold text-red-600">
-                Time's up! You lost this round. The correct answer was "
+                Time's up! You lost ${initialBet}. The correct answer was "
                 {randomQuestion.correct_answer}".
               </p>
               <button
-                onClick={handleEndGame}
+                onClick={() => navigate("/place-bets")}
                 className="mt-4 px-6 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition duration-200"
               >
                 Place New Bet
