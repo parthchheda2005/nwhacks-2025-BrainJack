@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function PlaceBets() {
-  const [bettingAmount, setBettingAmount] = useState(0);
-  const [balance, setBalance] = useState(1000);
+function PlaceBets({ balance, setBalance, bettingAmount, setBettingAmount }) {
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col items-center h-screen">
@@ -79,7 +79,10 @@ function PlaceBets() {
         >
           Reset Betting Amount
         </button>
-        <button className="bg-[#a2b288] px-2 py-3 rounded-lg w-52">
+        <button
+          className="bg-[#a2b288] px-2 py-3 rounded-lg w-52"
+          onClick={() => navigate("/game")}
+        >
           Play Game
         </button>
       </div>
