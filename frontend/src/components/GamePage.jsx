@@ -15,19 +15,26 @@ const GamePage = ({
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerHand, setDealerHand] = useState([]);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
 
   let currDeck = [...deck];
 
-  const drawCards = (deck, numCards) => {
-    let cards = [];
-    for (let i = 0; i < numCards; i++) {
-      let randomIndex = Math.floor(Math.random() * deck.length);
-      cards.push(deck[randomIndex]);
-      deck.splice(randomIndex, 1);
-    }
-    return cards;
-  };
+  useEffect(() => {
+    const getQuestions = async () => {
+      try {
+        const res = await fetch(
+          "http://127.0.0.1:8000/questions/v1/getAllQuestions"
+        );
+        const data = await res.json();
+        console.log(data.data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    getQuestions();
+  }, []);
 
   useEffect(() => {
     const preloadImages = () => {
@@ -62,6 +69,16 @@ const GamePage = ({
     }
     setPlayerScore(sum);
   }, [playerHand]);
+
+  const drawCards = (deck, numCards) => {
+    let cards = [];
+    for (let i = 0; i < numCards; i++) {
+      let randomIndex = Math.floor(Math.random() * deck.length);
+      cards.push(deck[randomIndex]);
+      deck.splice(randomIndex, 1);
+    }
+    return cards;
+  };
 
   const showGameOver = (finalLoser) => {
     if (finalLoser === "dealer") setBalance((curr) => curr + bettingAmount * 2);
