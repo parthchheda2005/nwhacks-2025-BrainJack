@@ -17,10 +17,12 @@ function PlaceBets({ balance, setBalance, bettingAmount, setBettingAmount }) {
               }
             }}
           >
-            {/* <img src="../assets/pokerchip.png" alt="Poker Chip" /> */}
-            <div className="rounded-full w-16 h-16 bg-red-600 mb-1"></div>
+            <img
+              src="https://www.jacquelynmarcella.com/blackjack/img/10-chip.png"
+              className="h-36 mb-3"
+              alt="Poker Chip"
+            />
           </button>
-          <p className="text-2xl">10</p>
         </div>
         <div className="flex flex-col items-center justify-center mx-6">
           <button
@@ -31,10 +33,13 @@ function PlaceBets({ balance, setBalance, bettingAmount, setBettingAmount }) {
               }
             }}
           >
-            {/* <img src="../assets/pokerchip.png" alt="Poker Chip" /> */}
-            <div className="rounded-full w-16 h-16 bg-blue-600 mb-1"></div>
+            <img
+              src="
+              https://www.jacquelynmarcella.com/blackjack/img/25-chip.png"
+              className="h-36 mb-3"
+              alt="Poker Chip"
+            />
           </button>
-          <p className="text-2xl">25</p>
         </div>
         <div className="flex flex-col items-center justify-center mx-6">
           <button
@@ -45,10 +50,13 @@ function PlaceBets({ balance, setBalance, bettingAmount, setBettingAmount }) {
               }
             }}
           >
-            {/* <img src="../assets/pokerchip.png" alt="Poker Chip" /> */}
-            <div className="rounded-full w-16 h-16 bg-green-600 mb-1"></div>
+            <img
+              src="
+              https://www.jacquelynmarcella.com/blackjack/img/50-chip.png"
+              className="h-36 mb-3"
+              alt="Poker Chip"
+            />
           </button>
-          <p className="text-2xl">50</p>
         </div>
         <div className="flex flex-col items-center justify-center mx-6">
           <button
@@ -59,10 +67,13 @@ function PlaceBets({ balance, setBalance, bettingAmount, setBettingAmount }) {
               }
             }}
           >
-            {/* <img src="../assets/pokerchip.png" alt="Poker Chip" /> */}
-            <div className="rounded-full w-16 h-16 bg-black mb-1"></div>
+            <img
+              src="
+              https://www.jacquelynmarcella.com/blackjack/img/100-chip.png"
+              className="h-36 mb-3"
+              alt="Poker Chip"
+            />
           </button>
-          <p className="text-2xl">100</p>
         </div>
       </div>
       <div className="flex flex-col justify-evenly items-center my-20">
