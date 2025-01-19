@@ -106,7 +106,7 @@ const GamePage = ({ loser, setLoser }) => {
     <div className="h-screen flex flex-col relative overflow-hidden">
       {/* Game Over Screen */}
       <div
-        className={`absolute inset-0 bg-black/90 flex flex-col items-center justify-center transform transition-transform duration-700 ease-in-out ${
+        className={`absolute inset-0 bg-black/90 flex flex-col items-center justify-center transform transition-transform duration-700 ease-in-out z-50 ${
           isGameOver ? "translate-y-0" : "-translate-y-full"
         }`}
       >
@@ -131,7 +131,7 @@ const GamePage = ({ loser, setLoser }) => {
       </div>
 
       {/* Top container (Dealer) */}
-      <div className="flex-1 flex items-center justify-center">
+      <div className="flex-1 flex items-center justify-center z-0">
         <div className="w-full flex justify-center items-center relative">
           <div className="flex flex-col gap-5 justify-center items-center">
             {dealerHand.map((curr, index) => (
