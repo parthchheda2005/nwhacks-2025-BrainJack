@@ -1,25 +1,14 @@
 import React, { useEffect, useState } from "react";
 import deck from "./deck";
-import { useNavigate } from "react-router-dom";
-
-const imgsStackTest = [
-  "https://github.com/hanhaechi/playing-cards/blob/master/clubs_10.png?raw=true",
-  "https://github.com/hanhaechi/playing-cards/blob/master/diamonds_2.png?raw=true",
-  "https://github.com/hanhaechi/playing-cards/blob/master/hearts_8.png?raw=true",
-];
 
 const GamePage = ({ loser, setLoser }) => {
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
-  const [checkingPlayerScore, setCheckingPlayerScore] = useState(false);
-
   const [playerHand, setPlayerHand] = useState([]);
   const [dealerHand, setDealerHand] = useState([]);
-
-  const [didStand, didNotStand] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);
 
   let currDeck = [...deck];
-  const navigate = useNavigate();
 
   const drawCards = (deck, numCards) => {
     let cards = [];
@@ -32,7 +21,6 @@ const GamePage = ({ loser, setLoser }) => {
   };
 
   useEffect(() => {
-    // Draw 2 cards for player and dealer
     const playerCards = drawCards(currDeck, 2);
     setPlayerHand(playerCards);
 
@@ -41,7 +29,6 @@ const GamePage = ({ loser, setLoser }) => {
   }, []);
 
   useEffect(() => {
-    console.log(dealerHand);
     let sum = 0;
     for (let i = 0; i < dealerHand.length; i++) {
       if (dealerHand[i].value) sum += dealerHand[i].value;
@@ -50,7 +37,6 @@ const GamePage = ({ loser, setLoser }) => {
   }, [dealerHand]);
 
   useEffect(() => {
-    console.log(playerHand);
     let sum = 0;
     for (let i = 0; i < playerHand.length; i++) {
       if (playerHand[i].value) sum += playerHand[i].value;
@@ -58,16 +44,19 @@ const GamePage = ({ loser, setLoser }) => {
     setPlayerScore(sum);
   }, [playerHand]);
 
-  // check player score at all times
   useEffect(() => {
     const checkPlayerScore = () => {
       if (playerScore > 21) {
         setLoser("player");
-        navigate("/game-over");
+        showGameOver();
       }
     };
-    setTimeout(checkPlayerScore, 2500);
+    setTimeout(checkPlayerScore, 1000);
   }, [playerScore]);
+
+  const showGameOver = () => {
+    setIsGameOver(true);
+  };
 
   const hit = (e) => {
     e.preventDefault();
@@ -78,55 +67,83 @@ const GamePage = ({ loser, setLoser }) => {
   const stand = (e) => {
     e.preventDefault();
 
-    const dealerTurn = () => {
-      let newCard = drawCards(currDeck, 1)[0]; // Draw one card
-      setDealerHand((prevHand) => [...prevHand, newCard]); // Add card to dealer's hand
-
-      setDealerScore((prevScore) => {
-        const updatedScore = prevScore + newCard.value;
-        // Check if the dealer needs to draw more cards
-        if (updatedScore < 17) {
-          setTimeout(dealerTurn, 2500); // Continue the dealer's turn after 1 second
+    const dealerTurn = (currentScore) => {
+      if (currentScore >= 17) {
+        if (currentScore > 21 || currentScore < playerScore) {
+          setLoser("dealer");
+          setTimeout(showGameOver, 1000);
+        } else if (currentScore > playerScore) {
+          setLoser("player");
+          setTimeout(showGameOver, 1000);
         } else {
-          // End of dealer's turn: determine the winner
-          if (updatedScore > 21 || updatedScore < playerScore) {
-            setLoser("dealer");
-            setTimeout(() => navigate("/game-over"), 3000);
-          } else if (updatedScore > playerScore) {
-            setLoser("player");
-            setTimeout(() => navigate("/game-over"), 3000);
-          } else {
-            setLoser("tie");
-            setTimeout(() => navigate("/game-over"), 3000);
-          }
+          setLoser("tie");
+          setTimeout(showGameOver, 1000);
         }
-        return updatedScore; // Return the updated score
-      });
+        return;
+      }
+
+      const newCard = drawCards(currDeck, 1)[0];
+      setDealerHand((prevHand) => [...prevHand, newCard]);
+      const updatedScore = currentScore + newCard.value;
+      setDealerScore(updatedScore);
+      setTimeout(() => dealerTurn(updatedScore), 1000);
     };
 
-    dealerTurn(); // Start the dealer's turn
+    dealerTurn(dealerScore);
+  };
+
+  const double = (e) => {
+    e.preventDefault();
+    hit(e);
+    setTimeout(() => stand(e), 1000);
+  };
+
+  const playAgain = () => {
+    window.location.reload();
   };
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen flex flex-col relative overflow-hidden">
+      {/* Game Over Screen */}
+      <div
+        className={`absolute inset-0 bg-black/90 flex flex-col items-center justify-center transform transition-transform duration-700 ease-in-out ${
+          isGameOver ? "translate-y-0" : "-translate-y-full"
+        }`}
+      >
+        <div className="text-center text-white">
+          <h1 className="text-6xl font-bold mb-8">Game Over</h1>
+          <p className="text-3xl mb-8">
+            {loser === "dealer" && "You Win! 🎉"}
+            {loser === "player" && "Dealer Wins! 😢"}
+            {loser === "tie" && "It's a Tie! 🤝"}
+          </p>
+          <div className="text-2xl mb-8">
+            <p>Your Score: {playerScore}</p>
+            <p>Dealer Score: {dealerScore}</p>
+          </div>
+          <button
+            onClick={playAgain}
+            className="bg-white text-black px-8 py-4 rounded-lg text-xl font-semibold hover:bg-gray-200 transition-colors"
+          >
+            Play Again
+          </button>
+        </div>
+      </div>
+
       {/* Top container (Dealer) */}
       <div className="flex-1 flex items-center justify-center">
         <div className="w-full flex justify-center items-center relative">
-          {/* Card in center */}
           <div className="flex flex-col gap-5 justify-center items-center">
-            {dealerHand.map((curr) => {
-              return (
-                <p className="font-semibold text-lg">{`${
-                  curr.emoji && curr.emoji
-                }${
-                  curr.face != "none"
-                    ? curr.face && curr.face
-                    : curr.value && curr.value
-                }`}</p>
-              );
-            })}
+            {dealerHand.map((curr, index) => (
+              <p key={index} className="font-semibold text-lg">{`${
+                curr.emoji && curr.emoji
+              }${
+                curr.face != "none"
+                  ? curr.face && curr.face
+                  : curr.value && curr.value
+              }`}</p>
+            ))}
           </div>
-          {/* Score display positioned absolutely on the right */}
           <div className="absolute right-10 flex flex-col items-center gap-3">
             <h1 className="font-semibold text-xl">Dealer Score</h1>
             <div className="rounded-full w-16 h-16 bg-slate-500 mb-1 flex items-center justify-center text-xl">
@@ -136,50 +153,44 @@ const GamePage = ({ loser, setLoser }) => {
         </div>
       </div>
 
-      {/* Dividing line */}
       <hr className="w-full border-t-2 border-gray-400" />
 
       {/* Bottom container (Player) */}
       <div className="flex-1 flex flex-col pt-4">
         <div className="flex flex-row justify-between w-full">
-          {/* Left side (buttons) */}
           <div className="flex flex-col gap-3 ml-3">
             <button
-              className="bg-red-600 text-white px-2 py-3 rounded-lg"
-              onClick={(e) => hit(e)}
+              className="bg-red-600 text-white px-2 py-3 rounded-lg hover:bg-red-700 transition-colors"
+              onClick={hit}
             >
               Hit
             </button>
-            <button className="bg-green-600 text-white px-2 py-3 rounded-lg">
+            <button
+              className="bg-green-600 text-white px-2 py-3 rounded-lg hover:bg-green-700 transition-colors"
+              onClick={double}
+            >
               Double
             </button>
             <button
-              className="bg-blue-600 text-white px-2 py-3 rounded-lg"
-              onClick={(e) => stand(e)}
+              className="bg-blue-600 text-white px-2 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+              onClick={stand}
             >
               Stand
             </button>
-            <button className="bg-purple-600 text-white px-2 py-3 rounded-lg">
-              Split
-            </button>
           </div>
 
-          {/* Card in center */}
           <div className="flex flex-col gap-5 justify-center items-center">
-            {playerHand.map((curr) => {
-              return (
-                <p className="font-semibold text-lg">{`${
-                  curr.emoji && curr.emoji
-                }${
-                  curr.face != "none"
-                    ? curr.face && curr.face
-                    : curr.value && curr.value
-                }`}</p>
-              );
-            })}
+            {playerHand.map((curr, index) => (
+              <p key={index} className="font-semibold text-lg">{`${
+                curr.emoji && curr.emoji
+              }${
+                curr.face != "none"
+                  ? curr.face && curr.face
+                  : curr.value && curr.value
+              }`}</p>
+            ))}
           </div>
 
-          {/* Right side */}
           <div className="flex flex-col items-center justify-center mr-12 gap-3">
             <h1 className="font-semibold text-xl">Your Score</h1>
             <div className="rounded-full w-16 h-16 bg-slate-500 mb-1 flex items-center justify-center text-xl">
