@@ -17,3 +17,19 @@ exports.addQuestions = async (req, res) => {
     });
   }
 };
+
+exports.getAllQuestions = async (req, res) => {
+  try {
+    const questions = await Questions.find();
+    res.status(200).json({
+      status: "success",
+      data: questions,
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({
+      status: "error",
+      message: "Failed to retrieve questions",
+    });
+  }
+};
