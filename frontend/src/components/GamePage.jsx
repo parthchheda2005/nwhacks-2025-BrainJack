@@ -30,6 +30,16 @@ const GamePage = ({
   };
 
   useEffect(() => {
+    const preloadImages = () => {
+      deck.forEach((card) => {
+        const img = new Image();
+        img.src = card.img;
+      });
+    };
+    preloadImages();
+  }, []);
+
+  useEffect(() => {
     const playerCards = drawCards(currDeck, 2);
     setPlayerHand(playerCards);
 
@@ -196,15 +206,17 @@ const GamePage = ({
       {/* Top container (Dealer) */}
       <div className="flex-1 flex items-center justify-center z-0">
         <div className="w-full flex justify-center items-center relative">
-          <div className="flex flex-col gap-5 justify-center items-center">
+          <div className="flex flex-row gap-5 justify-center items-center">
             {dealerHand.map((curr, index) => (
-              <p key={index} className="font-semibold text-lg">{`${
-                curr.emoji && curr.emoji
-              }${
-                curr.face != "none"
-                  ? curr.face && curr.face
-                  : curr.value && curr.value
-              }`}</p>
+              <img
+                className="h-60 w-auto card-animation-down"
+                src={curr.img}
+                alt={`${curr.emoji && curr.emoji}${
+                  curr.face != "none"
+                    ? curr.face && curr.face
+                    : curr.value && curr.value
+                }`}
+              />
             ))}
           </div>
           <div className="absolute right-10 flex flex-col items-center gap-3">
@@ -242,15 +254,17 @@ const GamePage = ({
             </button>
           </div>
 
-          <div className="flex flex-col gap-5 justify-center items-center">
+          <div className="flex flex-row gap-5 justify-center items-center mt-9">
             {playerHand.map((curr, index) => (
-              <p key={index} className="font-semibold text-lg">{`${
-                curr.emoji && curr.emoji
-              }${
-                curr.face != "none"
-                  ? curr.face && curr.face
-                  : curr.value && curr.value
-              }`}</p>
+              <img
+                className="h-60 w-auto card-animation-up"
+                src={curr.img}
+                alt={`${curr.emoji && curr.emoji}${
+                  curr.face != "none"
+                    ? curr.face && curr.face
+                    : curr.value && curr.value
+                }`}
+              />
             ))}
           </div>
 
