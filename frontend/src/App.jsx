@@ -7,6 +7,7 @@ import PlaceBets from "./components/PlaceBets";
 import GamePage from "./components/GamePage";
 import QuestionAnswer from "./components/QuestionAnswer";
 import WinningsMultiplier from "./components/WinningsMultiplier";
+import RulesPage from "./components/RulesPage";
 
 function App() {
   const [loser, setLoser] = useState("");
@@ -56,6 +57,7 @@ function App() {
               />
             }
           />
+          <Route path="/rules" element={<RulesPage />} />
           <Route
             path="/multiply-your-winnings"
             element={

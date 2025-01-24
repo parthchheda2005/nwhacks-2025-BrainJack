@@ -23,10 +23,22 @@ function HomePage() {
         answering study questions!
       </p>
       <button
-        className="bg-[#a2b288] px-2 py-3 rounded-lg m-5 w-80 text-xl"
+        className="bg-[#a2b288] px-2 py-3 rounded-lg mt-5 w-80 text-xl"
         onClick={() => navigate("/place-bets")}
       >
         Play Game!
+      </button>
+      <button
+        className="bg-[#8a647f] px-2 py-3 rounded-lg m-5 w-80 text-xl"
+        onClick={() => navigate("/rules")}
+      >
+        Rules
+      </button>
+      <button
+        className="bg-[#88a2b2] px-2 py-3 rounded-lg w-80 text-xl"
+        onClick={() => navigate("/place-bets")}
+      >
+        Leaderboard
       </button>
     </div>
   );

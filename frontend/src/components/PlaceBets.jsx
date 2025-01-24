@@ -91,10 +91,16 @@ function PlaceBets({ balance, setBalance, bettingAmount, setBettingAmount }) {
           Reset Betting Amount
         </button>
         <button
-          className="bg-[#a2b288] px-2 py-3 rounded-lg w-52"
+          className="bg-[#a2b288] px-2 py-3 rounded-lg w-52 mb-3"
           onClick={() => navigate("/game")}
         >
           Play Game
+        </button>
+        <button
+          className="bg-[#8a647f] px-2 py-3 rounded-lg w-52"
+          onClick={() => navigate("/")}
+        >
+          Back to Menu
         </button>
       </div>
     </div>
