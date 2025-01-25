@@ -76,7 +76,7 @@ function PlaceBets({ balance, setBalance, bettingAmount, setBettingAmount }) {
           </button>
         </div>
       </div>
-      <div className="flex flex-col justify-evenly items-center my-20">
+      <div className="flex flex-col justify-evenly items-center my-14">
         <p className="font-semibold text-xl">
           Current Betting Amount: {bettingAmount}
         </p>
@@ -96,6 +96,15 @@ function PlaceBets({ balance, setBalance, bettingAmount, setBettingAmount }) {
         >
           Play Game
         </button>
+        <div className="flex flex-row items-center justify-center gap-5 mb-3">
+          <input className="px-2 py-3 rounded-lg border"></input>
+          <button
+            className="bg-[#88a2b2] px-2 py-3 rounded-lg w-52"
+            onClick={() => navigate("/game")}
+          >
+            Save your score in the leaderboard!
+          </button>
+        </div>
         <button
           className="bg-[#8a647f] px-2 py-3 rounded-lg w-52"
           onClick={() => navigate("/")}
