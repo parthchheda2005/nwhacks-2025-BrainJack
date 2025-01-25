@@ -15,7 +15,7 @@ function App() {
   // 'dealer', 'player', '', 'tie'
 
   const [bettingAmount, setBettingAmount] = useState(0);
-  const [balance, setBalance] = useState(10000);
+  const [balance, setBalance] = useState(1000);
 
   return (
     <div>
