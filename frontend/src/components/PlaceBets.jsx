@@ -3,6 +3,27 @@ import { useNavigate } from "react-router-dom";
 
 function PlaceBets({ balance, setBalance, bettingAmount, setBettingAmount }) {
   const navigate = useNavigate();
+  const [name, setName] = useState("");
+
+  const saveScore = async () => {
+    try {
+      await fetch("http://127.0.0.1:8000/score/v1/storeScore", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          score: balance,
+        }),
+      });
+      setBalance(1000);
+      setBettingAmount(0);
+      setName("");
+    } catch (e) {
+      console.error("Something went wrong saving score");
+    }
+  };
 
   return (
     <div className="flex flex-col items-center h-screen">
@@ -97,10 +118,14 @@ function PlaceBets({ balance, setBalance, bettingAmount, setBettingAmount }) {
           Play Game
         </button>
         <div className="flex flex-row items-center justify-center gap-5 mb-3">
-          <input className="px-2 py-3 rounded-lg border"></input>
+          <input
+            className="px-2 py-3 rounded-lg border"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          ></input>
           <button
             className="bg-[#88a2b2] px-2 py-3 rounded-lg w-52"
-            onClick={() => navigate("/game")}
+            onClick={() => saveScore()}
           >
             Save your score in the leaderboard!
           </button>
