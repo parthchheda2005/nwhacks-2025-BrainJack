@@ -10,7 +10,8 @@ function RulesPage() {
         <ul className="list-decimal text-2xl space-y-4">
           <li>Place a bet!</li>
           <li>
-            Play a game of blackjack! In this version, Ace is 11 for simplicity.
+            Play a game of blackjack! In this version, Ace is strictly 11 for
+            simplicity.
           </li>
           <li>
             If you lose the game, answer a trivia question to get your money

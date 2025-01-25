@@ -8,13 +8,14 @@ import GamePage from "./components/GamePage";
 import QuestionAnswer from "./components/QuestionAnswer";
 import WinningsMultiplier from "./components/WinningsMultiplier";
 import RulesPage from "./components/RulesPage";
+import Leaderboard from "./components/Leaderboard";
 
 function App() {
   const [loser, setLoser] = useState("");
   // 'dealer', 'player', '', 'tie'
 
   const [bettingAmount, setBettingAmount] = useState(0);
-  const [balance, setBalance] = useState(1000);
+  const [balance, setBalance] = useState(10000);
 
   return (
     <div>
@@ -33,6 +34,7 @@ function App() {
               />
             }
           />
+          <Route path="/leaderboard" element={<Leaderboard />} />
           <Route
             path="/game"
             element={

@@ -36,7 +36,7 @@ function HomePage() {
       </button>
       <button
         className="bg-[#88a2b2] px-2 py-3 rounded-lg w-80 text-xl"
-        onClick={() => navigate("/place-bets")}
+        onClick={() => navigate("/leaderboard")}
       >
         Leaderboard
       </button>
