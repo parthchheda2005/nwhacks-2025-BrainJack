@@ -7,16 +7,19 @@ function PlaceBets({ balance, setBalance, bettingAmount, setBettingAmount }) {
 
   const saveScore = async () => {
     try {
-      await fetch("http://127.0.0.1:8000/score/v1/storeScore", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          score: balance,
-        }),
-      });
+      await fetch(
+        "https://nwhacks-2025-brainjack.onrender.com/score/v1/storeScore",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            score: balance,
+          }),
+        }
+      );
       setBalance(1000);
       setBettingAmount(0);
       setName("");
