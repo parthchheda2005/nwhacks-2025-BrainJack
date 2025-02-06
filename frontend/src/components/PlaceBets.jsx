@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../App";
 
-function PlaceBets({ balance, setBalance, bettingAmount, setBettingAmount }) {
+function PlaceBets({}) {
+  const { balance, setBalance, bettingAmount, setBettingAmount } =
+    useContext(AppContext);
   const navigate = useNavigate();
   const [name, setName] = useState("");
 

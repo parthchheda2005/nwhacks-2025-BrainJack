@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../App";
 
-function WinningsMultiplier({
-  bettingAmount,
-  setBettingAmount,
-  balance,
-  setBalance,
-}) {
+function WinningsMultiplier({}) {
+  const { bettingAmount, setBettingAmount, balance, setBalance } =
+    useContext(AppContext);
   const [randomQuestion, setRandomQuestion] = useState(null);
   const [shuffledAnswers, setShuffledAnswers] = useState([]);
   const [selectedAnswer, setSelectedAnswer] = useState(null);

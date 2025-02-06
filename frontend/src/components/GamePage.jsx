@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import deck from "./deck";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../App";
 
-const GamePage = ({
-  loser,
-  setLoser,
-  balance,
-  setBalance,
-  bettingAmount,
-  setBettingAmount,
-}) => {
+const GamePage = () => {
+  const {
+    loser,
+    setLoser,
+    balance,
+    setBalance,
+    bettingAmount,
+    setBettingAmount,
+  } = useContext(AppContext);
+
   const [playerScore, setPlayerScore] = useState(0);
   const [dealerScore, setDealerScore] = useState(0);
   const [playerHand, setPlayerHand] = useState([]);
