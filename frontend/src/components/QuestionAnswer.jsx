@@ -19,7 +19,7 @@ function QuestionAnswer({}) {
     const getQuestions = async () => {
       try {
         const res = await fetch(
-          "https://nwhacks-2025-brainjack.onrender.com/questions/v1/getAllQuestions"
+          "http://127.0.0.1:8000/questions/v1/getAllQuestions"
         );
         const data = await res.json();
 

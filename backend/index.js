@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+
 const {
   addQuestions,
   getAllQuestions,
@@ -10,8 +11,6 @@ const {
   storeScore,
   getTopScores,
 } = require("./controllers/savedScoreController.js");
-
-dotenv.config({ path: "./config.env" });
 
 const app = express();
 app.use(express.json());

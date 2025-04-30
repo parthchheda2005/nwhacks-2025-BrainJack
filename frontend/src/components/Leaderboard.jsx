@@ -8,15 +8,12 @@ function Leaderboard() {
   useEffect(() => {
     const getTop100 = async () => {
       try {
-        const res = await fetch(
-          "https://nwhacks-2025-brainjack.onrender.com/score/v1/getTopScores",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const res = await fetch("http://127.0.0.1:8000/score/v1/getTopScores", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         const data = await res.json();
         setTop100(data.data);
       } catch (e) {
